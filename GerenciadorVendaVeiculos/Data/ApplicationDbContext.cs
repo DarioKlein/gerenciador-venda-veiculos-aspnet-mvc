@@ -13,4 +13,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Cidade> Cidades { get; set; }
     public DbSet<Marca> Marcas { get; set; }
     public DbSet<Veiculo> Veiculos { get; set; }
+    public DbSet<Cliente> Clientes { get; set; }
 }

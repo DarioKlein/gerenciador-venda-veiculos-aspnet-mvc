@@ -31,16 +31,21 @@ public class Cliente
     [Display(Name = "Valor Hora")]
     public double ValorHora { get; private set; }
 
+    [Required] public int CidadeId { get; private set; }
+
+    public Cidade Cidade { get; private set; }
+
     private Cliente()
     {
     }
 
-    public Cliente(string nome, TipoArea area, int idade, double valorHora)
+    public Cliente(string nome, TipoArea area, int idade, double valorHora, Cidade cidade)
     {
         SetNome(nome);
         SetArea(area);
         SetIdade(idade);
         SetValorHora(valorHora);
+        SetCidade(cidade);
     }
 
     public void SetNome(string nome)
@@ -81,5 +86,11 @@ public class Cliente
         }
 
         ValorHora = valorHora;
+    }
+
+    public void SetCidade(Cidade cidade)
+    {
+        Cidade = cidade ?? throw new ArgumentNullException(nameof(cidade), "A cidade não pode ser nula");
+        CidadeId = Cidade.Id;
     }
 }

@@ -15,4 +15,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<Veiculo> Veiculos { get; set; }
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Venda> Vendas { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Venda>()
+            .Property(v => v.DataVenda)
+            .HasColumnType("timestamp without time zone");
+    }
 }

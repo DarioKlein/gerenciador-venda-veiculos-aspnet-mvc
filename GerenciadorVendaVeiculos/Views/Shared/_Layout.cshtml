@@ -1,67 +1,129 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using System.Globalization
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - GerenciadorVendaVeiculos</title>
+    <title>StockCar Manager</title>
     <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#1C2333',
+                        ink2: '#28304A',
+                        paper: '#FAFAF8',
+                        signal: '#E8871E',
+                        steel: '#64748B',
+                        line: '#E2E4E8',
+                    },
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/GerenciadorVendaVeiculos.styles.css" asp-append-version="true"/>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GerenciadorVendaVeiculos</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Marca" asp-action="Index">Marca</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Veiculo"
-                           asp-action="Index">Veículo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Venda" asp-action="Index">Venda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente"
-                           asp-action="Index">Cliente</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cidade" asp-action="Index">Cidade</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
-            </div>
+<body class="font-sans bg-paper text-ink antialiased">
+
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+
+    bool IsActive(string controller) => string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase);
+
+    string LinkClasses(string controller) => IsActive(controller)
+        ? "flex items-center gap-3 px-3 py-2 rounded-md bg-signal/15 text-signal font-medium"
+        : "flex items-center gap-3 px-3 py-2 rounded-md text-white/70 hover:bg-white/5 hover:text-white transition-colors";
+}
+
+<div id="sidebar-overlay" class="hidden fixed inset-0 bg-ink/60 z-30 lg:hidden"></div>
+
+<aside id="sidebar"
+       class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 transition-transform duration-200 bg-ink flex flex-col">
+    <div class="h-16 flex items-center gap-2 px-5 ">
+        <div class="w-8 h-8 rounded-md bg-signal flex items-center justify-center shrink-0">
+            <i data-lucide="car-front" class="w-5 h-5 text-ink"></i>
         </div>
+        <span
+            class="font-display font-semibold text-white text-[15px] leading-tight">StockCar Manager</span>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+        <a class="@LinkClasses("Home")" asp-area="" asp-controller="Home" asp-action="Index">
+            <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i> Home
+        </a>
+
+        <p class="px-3 pt-4 pb-1 text-[11px] tracking-wide text-white/35 font-medium">Catálogo</p>
+        <a class="@LinkClasses("Marca")" asp-area="" asp-controller="Marca" asp-action="Index">
+            <i data-lucide="badge" class="w-[18px] h-[18px]"></i> Marca
+        </a>
+        <a class="@LinkClasses("Veiculo")" asp-area="" asp-controller="Veiculo" asp-action="Index">
+            <i data-lucide="car" class="w-[18px] h-[18px]"></i> Veículo
+        </a>
+
+        <p class="px-3 pt-4 pb-1 text-[11px] tracking-wide text-white/35 font-medium">Comercial</p>
+        <a class="@LinkClasses("Cliente")" asp-area="" asp-controller="Cliente" asp-action="Index">
+            <i data-lucide="users" class="w-[18px] h-[18px]"></i> Cliente
+        </a>
+        <a class="@LinkClasses("Venda")" asp-area="" asp-controller="Venda" asp-action="Index">
+            <i data-lucide="receipt" class="w-[18px] h-[18px]"></i> Venda
+        </a>
+
+        <p class="px-3 pt-4 pb-1 text-[11px] tracking-wide text-white/35 font-medium">Cadastros</p>
+        <a class="@LinkClasses("Cidade")" asp-area="" asp-controller="Cidade" asp-action="Index">
+            <i data-lucide="map-pin" class="w-[18px] h-[18px]"></i> Cidade
+        </a>
     </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
+
+    <div class="px-3 py-4 border-t border-white/10">
+        <a class="@LinkClasses("Logout")" asp-area="" asp-controller="Home" asp-action="Index">
+            <i data-lucide="log-out" class="w-[18px] h-[18px]"></i> Logout
+        </a>
+    </div>
+</aside>
+
+<div class="lg:pl-64 min-h-screen flex flex-col">
+    <header
+        class="h-16 flex items-center justify-between gap-4 px-4 sm:px-6 border-l border-white/10 border-line bg-ink sticky top-0 z-20 text-white">
+        <button id="sidebar-toggle" type="button" class="lg:hidden p-2 -ml-2 rounded-md text-ink hover:bg-ink/5"
+                aria-controls="sidebar" aria-expanded="false" aria-label="Abrir menu">
+            <i data-lucide="menu" class="w-7 h-7 text-white"></i>
+        </button>
+        <div class="w-full h-16 justify-center flex items-center gap-2 px-5 lg:hidden">
+            <div class="w-8 h-8 rounded-md bg-signal flex items-center justify-center shrink-0">
+                <i data-lucide="car-front" class="w-5 h-5 text-ink"></i>
+            </div>
+            <span
+                class="font-display font-semibold text-white text-[15px] leading-tight">StockCar Manager</span>
+        </div>
+        <h1 class="hidden lg:flex">Bem-Vindo, Dario 👋</h1>
+        <span class="hidden lg:flex">@DateTime.Now.ToString(
+                "dddd, dd 'de' MMMM 'de' yyyy",
+                new CultureInfo("pt-BR")
+            )</span>
+    </header>
+
+    <main role="main" class="flex-1 px-4 sm:px-6 py-6">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2026 - GerenciadorVendaVeiculos - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>

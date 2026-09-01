@@ -1,0 +1,18 @@
+<svg viewBox="0 0 320 200" class="hidden lg:block w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 150 L320 150" stroke="#E2E4E8" stroke-width="2"/>
+    <path d="M0 150 Q 160 80 320 150" stroke="#1C2333" stroke-width="2" fill="none" opacity="0.15"/>
+    <path d="M40 150 L60 150 M90 150 L110 150 M140 150 L160 150 M190 150 L210 150 M240 150 L260 150"
+          stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+
+    <g transform="translate(120 108)">
+        <path
+                d="M4 30 L14 12 Q17 6 26 6 L64 6 Q72 6 76 12 L86 30 L94 30 Q100 30 100 36 L100 44 Q100 48 96 48 L4 48 Q0 48 0 44 L0 36 Q0 30 4 30 Z"
+                fill="#1C2333"/>
+        <path d="M22 28 L30 12 L60 12 L68 28 Z" fill="#FAFAF8" opacity="0.9"/>
+        <circle cx="24" cy="48" r="10" fill="#1C2333"/>
+        <circle cx="24" cy="48" r="4" fill="#FAFAF8"/>
+        <circle cx="78" cy="48" r="10" fill="#1C2333"/>
+        <circle cx="78" cy="48" r="4" fill="#FAFAF8"/>
+        <rect x="88" y="16" width="6" height="6" rx="1" fill="#E8871E"/>
+    </g>
+</svg>

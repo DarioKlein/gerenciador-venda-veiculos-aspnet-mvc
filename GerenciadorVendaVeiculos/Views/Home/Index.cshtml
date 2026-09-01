@@ -1,8 +1,89 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model GerenciadorVendaVeiculos.Models.ViewModels.HomeResumoViewModel
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="max-w-5xl">
+
+    <div class="grid lg:grid-cols-[1fr_320px] gap-10 items-center py-6">
+        <div>
+            <h1 class="font-display text-3xl sm:text-4xl font-semibold leading-tight text-ink">
+                Cada veículo, cliente e venda, organizados num só lugar.
+            </h1>
+            <p class="mt-4 text-steel text-base leading-relaxed max-w-xl">
+                O Gerenciador de Venda de Veículos acompanha o ciclo completo do seu pátio: o cadastro
+                da marca e do carro, quem comprou, de onde veio o cliente e quanto fechou a venda.
+                Comece por onde fizer mais sentido — não existe uma ordem certa.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a asp-controller="Veiculo" asp-action="Index"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-signal text-white font-medium hover:bg-signal/90 transition-colors">
+                    <i data-lucide="car" class="w-4 h-4"></i>
+                    Ver veículos
+                </a>
+                <a asp-controller="Venda" asp-action="Create"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-line text-ink font-medium hover:bg-ink/5 transition-colors">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    Registrar venda
+                </a>
+            </div>
+        </div>
+
+        <img src="./img/car.svg"></img>
+    </div>
+
+    <div class="border-y border-line py-6 flex flex-wrap gap-x-10 gap-y-4">
+        <div>
+            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVeiculos</p>
+            <p class="text-sm text-steel">veículos no pátio</p>
+        </div>
+        <div>
+            <p class="font-display text-2xl font-semibold text-signal">@Model.VeiculosDisponiveis</p>
+            <p class="text-sm text-steel">disponíveis agora</p>
+        </div>
+        <div>
+            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalClientes</p>
+            <p class="text-sm text-steel">clientes cadastrados</p>
+        </div>
+        <div>
+            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVendas</p>
+            <p class="text-sm text-steel">vendas registradas</p>
+        </div>
+        <div>
+            <p class="font-display text-2xl font-semibold text-ink">@Model.ValorTotalVendido.ToString("C")</p>
+            <p class="text-sm text-steel">movimentados em vendas</p>
+        </div>
+    </div>
+
+    <div class="mt-2 border-t border-line">
+        @{
+            var modulos = new (string Controller, string Icon, string Nome, string Descricao)[]
+            {
+                ("Cidade", "map-pin", "Cidade", "Cadastro base de cidades, usado para localizar clientes."),
+                ("Marca", "badge", "Marca", "Fabricantes cadastrados, associados a cada veículo."),
+                ("Veiculo", "car", "Veículo", "O estoque do pátio: modelo, ano, cor, valor e situação."),
+                ("Cliente", "users", "Cliente", "Quem compra: dados pessoais e cidade de origem."),
+                ("Venda", "receipt", "Venda", "O fechamento do negócio, ligando cliente e veículo."),
+            };
+        }
+
+        @foreach (var m in modulos)
+        {
+            <a asp-controller="@m.Controller" asp-action="Index"
+               class="group flex items-center gap-4 py-4 border-b border-line hover:bg-ink/[0.02] transition-colors -mx-2 px-2 rounded-md">
+                <div
+                    class="w-9 h-9 rounded-md bg-ink/5 flex items-center justify-center shrink-0 group-hover:bg-signal/15 transition-colors">
+                    <i data-lucide="@m.Icon" class="w-4 h-4 text-ink group-hover:text-signal transition-colors"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-medium text-ink">@m.Nome</p>
+                    <p class="text-sm text-steel truncate">@m.Descricao</p>
+                </div>
+                <i data-lucide="arrow-right"
+                   class="w-4 h-4 text-steel group-hover:text-signal group-hover:translate-x-0.5 transition-all"></i>
+            </a>
+        }
+    </div>
+
 </div>

@@ -1,54 +1,63 @@
 @model GerenciadorVendaVeiculos.Models.Veiculo
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do veículo";
+
+    (string classes, string label) SituacaoBadge(GerenciadorVendaVeiculos.Models.SituacaoVeiculo situacao) => situacao switch
+    {
+        GerenciadorVendaVeiculos.Models.SituacaoVeiculo.Disponivel => ("bg-green-50 text-green-700 border-green-200", "Disponível"),
+        GerenciadorVendaVeiculos.Models.SituacaoVeiculo.Reservado => ("bg-amber-50 text-amber-700 border-amber-200", "Reservado"),
+        GerenciadorVendaVeiculos.Models.SituacaoVeiculo.Vendido => ("bg-ink/5 text-steel border-line", "Vendido"),
+        GerenciadorVendaVeiculos.Models.SituacaoVeiculo.EmManutencao => ("bg-red-50 text-red-700 border-red-200", "Em manutenção"),
+        _ => ("bg-ink/5 text-steel border-line", situacao.ToString())
+    };
+
+    var (badgeClasses, badgeLabel) = SituacaoBadge(Model.Situacao);
 }
 
-<h1>Details</h1>
+<div class="max-w-md">
+    <h2 class="font-display text-2xl font-semibold text-ink">@Model.Modelo</h2>
+    <p class="text-sm text-steel mt-1 mb-6">Detalhes do veículo cadastrado.</p>
 
-<div>
-    <h4>Veiculo</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Modelo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Modelo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Marca)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Marca.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ano)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ano)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Situacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Situacao)
-        </dd>
+    <dl class="border border-line rounded-md divide-y divide-line">
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Modelo)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Modelo)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Marca)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Marca.Nome)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Ano)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Ano)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Cor)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Cor)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Valor)</dt>
+            <dd class="text-sm text-ink font-medium">@Model.Valor.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+        </div>
+        <div class="flex justify-between items-center px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Situacao)</dt>
+            <dd>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border @badgeClasses">
+                    @badgeLabel
+                </span>
+            </dd>
+        </div>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <div class="mt-6 flex gap-3">
+        <a asp-action="Edit" asp-route-id="@Model?.Id"
+           class="px-4 py-2 rounded-md bg-signal text-white font-medium hover:bg-signal/90 transition-colors">
+            Editar
+        </a>
+        <a asp-action="Index"
+           class="px-4 py-2 rounded-md border border-line text-ink font-medium hover:bg-ink/5 transition-colors">
+            Voltar
+        </a>
+    </div>
 </div>

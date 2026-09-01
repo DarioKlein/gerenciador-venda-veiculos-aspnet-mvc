@@ -4,9 +4,9 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="max-w-5xl">
+<div class="max-w-5xl flex flex-col gap-10">
 
-    <div class="grid lg:grid-cols-[1fr_320px] gap-10 items-center py-6">
+    <div class="grid lg:grid-cols-[1fr_320px] gap-10 items-center">
         <div>
             <h1 class="font-display text-3xl sm:text-4xl font-semibold leading-tight text-ink">
                 Cada veículo, cliente e venda, organizados num só lugar.
@@ -30,29 +30,32 @@
             </div>
         </div>
 
-        <img src="./img/car.svg"></img>
+        <img class="hidden lg:flex  -mt-20" src="./img/car.svg"></img>
     </div>
 
-    <div class="border-y border-line py-6 flex flex-wrap gap-x-10 gap-y-4">
-        <div>
-            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVeiculos</p>
-            <p class="text-sm text-steel">veículos no pátio</p>
-        </div>
-        <div>
-            <p class="font-display text-2xl font-semibold text-signal">@Model.VeiculosDisponiveis</p>
-            <p class="text-sm text-steel">disponíveis agora</p>
-        </div>
-        <div>
-            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalClientes</p>
-            <p class="text-sm text-steel">clientes cadastrados</p>
-        </div>
-        <div>
-            <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVendas</p>
-            <p class="text-sm text-steel">vendas registradas</p>
-        </div>
-        <div>
-            <p class="font-display text-2xl font-semibold text-ink">@Model.ValorTotalVendido.ToString("C")</p>
-            <p class="text-sm text-steel">movimentados em vendas</p>
+    <div class="flex flex-col gap-3">
+        <h1 class="font-display text-2xl font-semibold leading-tight text-ink">Resumo do Sistema</h1>
+        <div class="border-y border-line py-6 flex flex-col md:flex-row  gap-x-10 gap-y-4">
+            <div>
+                <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVeiculos</p>
+                <p class="text-sm text-steel">veículos no pátio</p>
+            </div>
+            <div>
+                <p class="font-display text-2xl font-semibold text-signal">@Model.VeiculosDisponiveis</p>
+                <p class="text-sm text-steel">disponíveis agora</p>
+            </div>
+            <div>
+                <p class="font-display text-2xl font-semibold text-ink">@Model.TotalClientes</p>
+                <p class="text-sm text-steel">clientes cadastrados</p>
+            </div>
+            <div>
+                <p class="font-display text-2xl font-semibold text-ink">@Model.TotalVendas</p>
+                <p class="text-sm text-steel">vendas registradas</p>
+            </div>
+            <div>
+                <p class="font-display text-2xl font-semibold text-ink">@Model.ValorTotalVendido.ToString("C")</p>
+                <p class="text-sm text-steel">movimentados em vendas</p>
+            </div>
         </div>
     </div>
 

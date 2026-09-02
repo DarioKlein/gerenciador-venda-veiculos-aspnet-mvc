@@ -5,8 +5,13 @@
 
     (string classes, string label) AreaBadge(GerenciadorVendaVeiculos.Models.TipoArea area) => area switch
     {
-        GerenciadorVendaVeiculos.Models.TipoArea.PessoaFisica => ("bg-blue-50 text-blue-700 border-blue-200", "Pessoa Física"),
-        GerenciadorVendaVeiculos.Models.TipoArea.PessoaJuridica => ("bg-purple-50 text-purple-700 border-purple-200", "Pessoa Jurídica"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Clt => ("bg-indigo-50 text-indigo-700 border-indigo-200", "CLT"),
+        GerenciadorVendaVeiculos.Models.TipoArea.ServidorPublico => ("bg-teal-50 text-teal-700 border-teal-200", "Servidor Público"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Autonomo => ("bg-purple-50 text-purple-700 border-purple-200", "Autônomo"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Empresario => ("bg-amber-50 text-amber-700 border-amber-200", "Empresário"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Aposentado => ("bg-slate-50 text-slate-700 border-slate-200", "Aposentado"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Estudante => ("bg-green-50 text-green-700 border-green-200", "Estudante"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Outro => ("bg-ink/5 text-steel border-line", "Outro"),
         _ => ("bg-ink/5 text-steel border-line", area.ToString())
     };
 }
@@ -35,49 +40,51 @@ else
         <div class="overflow-x-auto">
             <table class="w-full text-sm min-w-[720px]">
                 <thead>
-                    <tr class="border-b border-line bg-ink/[0.02] text-left">
-                        <th class="px-4 py-3 font-medium text-steel">Nome</th>
-                        <th class="px-4 py-3 font-medium text-steel">Área</th>
-                        <th class="px-4 py-3 font-medium text-steel">Idade</th>
-                        <th class="px-4 py-3 font-medium text-steel">Valor Hora</th>
-                        <th class="px-4 py-3 font-medium text-steel">Cidade</th>
-                        <th class="px-4 py-3 font-medium text-steel w-0"></th>
-                    </tr>
+                <tr class="border-b border-line bg-ink/[0.02] text-center">
+                    <th class="px-4 py-3 font-medium text-steel">Nome</th>
+                    <th class="px-4 py-3 font-medium text-steel">Área</th>
+                    <th class="px-4 py-3 font-medium text-steel">Idade</th>
+                    <th class="px-4 py-3 font-medium text-steel">Valor Hora</th>
+                    <th class="px-4 py-3 font-medium text-steel">Cidade</th>
+                    <th class="px-4 py-3 font-medium text-steel w-0"></th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        var (badgeClasses, badgeLabel) = AreaBadge(item.Area);
-                        <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02]">
-                            <td class="px-4 py-3 text-ink font-medium">@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td class="px-4 py-3">
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border @badgeClasses">
+                @foreach (var item in Model)
+                {
+                    var (badgeClasses, badgeLabel) = AreaBadge(item.Area);
+                    <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02] text-center">
+                        <td class="px-4 py-3 text-ink font-medium">@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td class="px-4 py-3">
+                                <span
+                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border @badgeClasses">
                                     @badgeLabel
                                 </span>
-                            </td>
-                            <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Idade)</td>
-                            <td class="px-4 py-3 text-ink">@item.ValorHora.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
-                            <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Cidade.Descricao)</td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center justify-end gap-1">
-                                    <a asp-action="Details" asp-route-id="@item.Id"
-                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-                                    </a>
-                                    <a asp-action="Edit" asp-route-id="@item.Id"
-                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
-                                        <i data-lucide="pencil" class="w-4 h-4"></i>
-                                    </a>
-                                    <button type="button" class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
-                                            title="Excluir"
-                                            data-delete-id="@item.Id"
-                                            data-delete-nome="@item.Nome">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                        </td>
+                        <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Idade)</td>
+                        <td class="px-4 py-3 text-ink">@item.ValorHora.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                        <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Cidade.Descricao)</td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center justify-end gap-1">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id"
+                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </a>
+                                <button type="button"
+                                        class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
+                                        title="Excluir"
+                                        data-delete-id="@item.Id"
+                                        data-delete-nome="@item.Nome">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

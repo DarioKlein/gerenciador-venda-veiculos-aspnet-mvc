@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorVendaVeiculos.Models;
 
 [Table("Cidade")]
+[Index(nameof(Descricao), IsUnique = true)]
+[Index(nameof(Sigla), IsUnique = true)]
 public class Cidade
 {
     [Key]
@@ -17,8 +20,8 @@ public class Cidade
     public string Descricao { get; private set; }
 
     [Required]
-    [MaxLength(2)]
-    [Column(TypeName = "char(2)")]
+    [MaxLength(3)]
+    [Column(TypeName = "varchar(3)")]
     [Display(Name = "Sigla")]
     public string Sigla { get; private set; }
 
@@ -39,12 +42,17 @@ public class Cidade
             throw new ArgumentNullException(nameof(sigla), "A sigla não pode ser nula ou vazia");
         }
 
-        if (sigla.Length != 2)
+        if (sigla.Length is < 2 or > 3)
         {
-            throw new ArgumentException("A sigla deve conter 2 caracteres");
+            throw new ArgumentException("A sigla deve conter de 2 a 3 caracteres");
         }
 
-        Sigla = sigla;
+        if (!sigla.All(char.IsLetter))
+        {
+            throw new ArgumentException("A sigla deve conter apenas letras");
+        }
+
+        Sigla = sigla.ToUpper().Trim();
     }
 
     public void SetDescricao(string descricao)
@@ -59,6 +67,13 @@ public class Cidade
             throw new ArgumentException("A descrição deve conter no máximo 100 caracteres");
         }
 
-        Descricao = descricao;
+        if (!descricao.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+        {
+            throw new ArgumentException(
+                "A descrição deve conter apenas letras e espaços"
+            );
+        }
+
+        Descricao = descricao.Trim();
     }
 }

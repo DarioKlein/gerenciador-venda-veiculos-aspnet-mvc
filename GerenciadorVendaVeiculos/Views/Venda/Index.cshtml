@@ -1,65 +1,125 @@
 @model IEnumerable<GerenciadorVendaVeiculos.Models.Venda>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vendas";
 }
 
-<h1>Index</h1>
+<div class="flex flex-col gap-5 justify-between mb-6 sm:flex-row sm:items-center sm:gap-0">
+    <div>
+        <h2 class="font-display text-2xl font-semibold text-ink">Vendas</h2>
+        <p class="text-sm text-steel mt-1">Vendas registradas no sistema.</p>
+    </div>
+    <a asp-action="Create"
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-signal text-white font-medium hover:bg-signal/90 transition-colors">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        Nova venda
+    </a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Veiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataVenda)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorVenda)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorCausa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vendedor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Veiculo.Cor)
-            </td>
-            <td>
-                @item.DataVenda.ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorVenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorCausa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendedor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (!Model.Any())
+{
+    <div class="border border-line rounded-md py-12 text-center">
+        <p class="text-steel">Nenhuma venda registrada ainda.</p>
+    </div>
 }
-    </tbody>
-</table>
+else
+{
+    <div class="border border-line rounded-md overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm min-w-[880px] table-fixed">
+                <thead>
+                    <tr class="border-b border-line bg-ink/[0.02] text-center">
+                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Cliente</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Veículo</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[12%]">Data</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Venda</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Causa</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Vendedor</th>
+                        <th class="px-4 py-3 font-medium text-steel w-[12%]"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02] text-center">
+                            <td class="px-4 py-3 text-ink font-medium truncate">@Html.DisplayFor(modelItem => item.Cliente.Nome)</td>
+                            <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Veiculo.Modelo)</td>
+                            <td class="px-4 py-3 text-steel">@item.DataVenda.ToString("dd/MM/yyyy")</td>
+                            <td class="px-4 py-3 text-ink">@item.ValorVenda.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                            <td class="px-4 py-3 text-steel">@item.ValorCausa.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                            <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Vendedor)</td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center justify-end gap-1">
+                                    <a asp-action="Details" asp-route-id="@item.Id"
+                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id"
+                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
+                                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                                    </a>
+                                    <button type="button" class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
+                                            title="Excluir"
+                                            data-delete-id="@item.Id"
+                                            data-delete-nome="venda de @item.Cliente.Nome">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="delete-modal-overlay" class="absolute inset-0 bg-ink/60"></div>
+    <div class="relative bg-white rounded-md shadow-xl w-full max-w-sm p-6">
+        <h3 class="font-display font-semibold text-lg text-ink">Excluir venda</h3>
+        <p class="mt-2 text-sm text-steel">
+            Tem certeza que deseja excluir a <strong id="delete-modal-nome" class="text-ink"></strong>?
+            Essa ação não pode ser desfeita.
+        </p>
+        <form id="delete-form" method="post" class="mt-6 flex justify-end gap-2">
+            @Html.AntiForgeryToken()
+            <button type="button" id="delete-modal-cancel"
+                    class="px-4 py-2 rounded-md border border-line text-ink font-medium hover:bg-ink/5 transition-colors">
+                Cancelar
+            </button>
+            <button type="submit"
+                    class="px-4 py-2 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition-colors">
+                Excluir
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const modal = document.getElementById('delete-modal');
+            const overlay = document.getElementById('delete-modal-overlay');
+            const cancelBtn = document.getElementById('delete-modal-cancel');
+            const nomeEl = document.getElementById('delete-modal-nome');
+            const form = document.getElementById('delete-form');
+            const baseUrl = '@Url.Action("Delete")';
+
+            document.querySelectorAll('[data-delete-id]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    nomeEl.textContent = btn.getAttribute('data-delete-nome');
+                    form.action = baseUrl + '/' + btn.getAttribute('data-delete-id');
+                    modal.classList.remove('hidden');
+                });
+            });
+
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            cancelBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', closeModal);
+        })();
+    </script>
+}

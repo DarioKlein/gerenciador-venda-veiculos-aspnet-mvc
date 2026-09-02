@@ -12,7 +12,7 @@ public class CidadeViewModel
     public string Descricao { get; set; }
 
     [Required]
-    [MaxLength(2)]
+    [MaxLength(3)]
     [Display(Name = "Sigla")]
     public string Sigla { get; set; }
 }

@@ -1,54 +1,47 @@
 @model GerenciadorVendaVeiculos.Models.Venda
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes da venda";
 }
 
-<h1>Details</h1>
+<div class="max-w-md">
+    <h2 class="font-display text-2xl font-semibold text-ink">Venda de @Model.Cliente.Nome</h2>
+    <p class="text-sm text-steel mt-1 mb-6">Detalhes da venda registrada.</p>
 
-<div>
-    <h4>Venda</h4>
-    <hr/>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cliente)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cliente.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Veiculo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Veiculo.Cor)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataVenda)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DataVenda.ToString("dd/MM/yyyy")
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorVenda)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ValorVenda)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorCausa)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ValorCausa)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vendedor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vendedor)
-        </dd>
+    <dl class="border border-line rounded-md divide-y divide-line">
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Cliente)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Cliente.Nome)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Veiculo)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Veiculo.Modelo)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.DataVenda)</dt>
+            <dd class="text-sm text-ink font-medium">@Model.DataVenda.ToString("dd/MM/yyyy")</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.ValorVenda)</dt>
+            <dd class="text-sm text-ink font-medium">@Model.ValorVenda.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.ValorCausa)</dt>
+            <dd class="text-sm text-ink font-medium">@Model.ValorCausa.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Vendedor)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Vendedor)</dd>
+        </div>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <div class="mt-6 flex gap-3">
+        <a asp-action="Edit" asp-route-id="@Model?.Id"
+           class="px-4 py-2 rounded-md bg-signal text-white font-medium hover:bg-signal/90 transition-colors">
+            Editar
+        </a>
+        <a asp-action="Index" class="px-4 py-2 rounded-md border border-line text-ink font-medium hover:bg-ink/5 transition-colors">
+            Voltar
+        </a>
+    </div>
 </div>

@@ -59,6 +59,33 @@ namespace GerenciadorVendaVeiculos.Controllers
         {
             if (ModelState.IsValid)
             {
+                var descricaoExiste = await _context.Cidades
+                    .AnyAsync(c => c.Descricao == viewModel.Descricao);
+
+                if (descricaoExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Descricao),
+                        "Já existe uma cidade com essa descrição."
+                    );
+                }
+
+                var siglaExiste = await _context.Cidades
+                    .AnyAsync(c => c.Sigla == viewModel.Sigla);
+
+                if (siglaExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Sigla),
+                        "Já existe uma cidade com essa sigla."
+                    );
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModel);
+                }
+
                 try
                 {
                     var cidade = new Cidade(viewModel.Descricao, viewModel.Sigla);
@@ -71,6 +98,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                     ModelState.AddModelError("", ex.Message);
                 }
             }
+
             return View(viewModel);
         }
 
@@ -87,6 +115,7 @@ namespace GerenciadorVendaVeiculos.Controllers
             {
                 return NotFound();
             }
+
             var viewModel = new CidadeViewModel
             {
                 Id = cidade.Id,
@@ -112,6 +141,35 @@ namespace GerenciadorVendaVeiculos.Controllers
 
             if (ModelState.IsValid)
             {
+                var descricaoExiste = await _context.Cidades
+                    .AnyAsync(c => c.Descricao == viewModel.Descricao
+                                   && c.Id != viewModel.Id);
+
+                if (descricaoExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Descricao),
+                        "Já existe uma cidade com essa descrição."
+                    );
+                }
+
+                var siglaExiste = await _context.Cidades
+                    .AnyAsync(c => c.Sigla == viewModel.Sigla
+                                   && c.Id != viewModel.Id);
+
+                if (siglaExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Sigla),
+                        "Já existe uma cidade com essa sigla."
+                    );
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModel);
+                }
+
                 try
                 {
                     cidade.SetDescricao(viewModel.Descricao);
@@ -126,6 +184,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                     {
                         return NotFound();
                     }
+
                     throw;
                 }
                 catch (ArgumentException ex)
@@ -133,6 +192,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                     ModelState.AddModelError("", ex.Message);
                 }
             }
+
             return View(viewModel);
         }
 

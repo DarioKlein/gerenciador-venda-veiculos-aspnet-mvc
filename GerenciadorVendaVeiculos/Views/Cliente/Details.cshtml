@@ -5,8 +5,13 @@
 
     (string classes, string label) AreaBadge(GerenciadorVendaVeiculos.Models.TipoArea area) => area switch
     {
-        GerenciadorVendaVeiculos.Models.TipoArea.PessoaFisica => ("bg-blue-50 text-blue-700 border-blue-200", "Pessoa Física"),
-        GerenciadorVendaVeiculos.Models.TipoArea.PessoaJuridica => ("bg-purple-50 text-purple-700 border-purple-200", "Pessoa Jurídica"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Clt => ("bg-indigo-50 text-indigo-700 border-indigo-200", "CLT"),
+        GerenciadorVendaVeiculos.Models.TipoArea.ServidorPublico => ("bg-teal-50 text-teal-700 border-teal-200", "Servidor Público"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Autonomo => ("bg-purple-50 text-purple-700 border-purple-200", "Autônomo"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Empresario => ("bg-amber-50 text-amber-700 border-amber-200", "Empresário"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Aposentado => ("bg-slate-50 text-slate-700 border-slate-200", "Aposentado"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Estudante => ("bg-green-50 text-green-700 border-green-200", "Estudante"),
+        GerenciadorVendaVeiculos.Models.TipoArea.Outro => ("bg-ink/5 text-steel border-line", "Outro"),
         _ => ("bg-ink/5 text-steel border-line", area.ToString())
     };
 

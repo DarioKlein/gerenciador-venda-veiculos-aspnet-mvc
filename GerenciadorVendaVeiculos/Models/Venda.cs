@@ -7,36 +7,27 @@ namespace GerenciadorVendaVeiculos.Models;
 public class Venda
 {
     [Key]
-    [Display(Name = "ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private set; }
 
     [Required] public int ClienteId { get; private set; }
 
-    [Display(Name = "Cliente")] public Cliente Cliente { get; private set; }
+    public Cliente Cliente { get; private set; }
 
     [Required] public int VeiculoId { get; private set; }
 
-    [Display(Name = "Veículo")] public Veiculo Veiculo { get; private set; }
+    public Veiculo Veiculo { get; private set; }
 
-    [Required]
-    [Display(Name = "Data da Venda")]
-    public DateTime DataVenda { get; private set; }
+    [Required] public DateTime DataVenda { get; private set; }
 
     [Required]
     [Range(0.01, double.MaxValue)]
-    [Display(Name = "Valor da Venda")]
+
     public double ValorVenda { get; private set; }
 
-    [Required]
-    [Range(0, double.MaxValue)]
-    [Display(Name = "Valor da Causa")]
-    public double ValorCausa { get; private set; }
+    [Required] [Range(0, double.MaxValue)] public double ValorCausa { get; private set; }
 
-    [Required]
-    [MaxLength(100)]
-    [Display(Name = "Vendedor")]
-    public string Vendedor { get; private set; }
+    [Required] [MaxLength(100)] public string Vendedor { get; private set; }
 
     private Venda()
     {

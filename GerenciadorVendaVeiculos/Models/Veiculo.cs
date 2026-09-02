@@ -7,29 +7,22 @@ namespace GerenciadorVendaVeiculos.Models;
 public class Veiculo
 {
     [Key]
-    [Display(Name = "ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private set; }
 
-    [Required]
-    [MaxLength(60)]
-    [Display(Name = "Modelo")]
-    public string Modelo { get; private set; }
+    [Required] [MaxLength(60)] public string Modelo { get; private set; }
 
     [Required] public int MarcaId { get; private set; }
 
     public Marca Marca { get; private set; }
 
-    [Required] [Display(Name = "Ano")] public int Ano { get; private set; }
+    [Required] public int Ano { get; private set; }
 
-    [Required]
-    [MaxLength(30)]
-    [Display(Name = "Cor")]
-    public string Cor { get; private set; }
+    [Required] [MaxLength(30)] public string Cor { get; private set; }
 
     [Required]
     [Range(0.01, double.MaxValue)]
-    [Display(Name = "Valor")]
+
     public double Valor { get; private set; }
 
     [Required] public SituacaoVeiculo Situacao { get; private set; }

@@ -6,29 +6,30 @@ public class VeiculoViewModel
 {
     public int Id { get; set; }
 
-    [Required]
-    [MaxLength(60)]
+    [Required(ErrorMessage = "O modelo é obrigatório.")]
+    [MaxLength(60, ErrorMessage = "O modelo tem um tamanho máximo de 100 caracteres")]
     [Display(Name = "Modelo")]
     public string Modelo { get; set; }
 
-    [Required] [Display(Name = "Marca")] public int MarcaId { get; set; }
+    [Required(ErrorMessage = "Selecione uma marca.")]
+    [Display(Name = "Marca")]
+    public int? MarcaId { get; set; }
 
-    [Required]
-    [Range(1950, 2100)]
+    [Required(ErrorMessage = "O ano é obrigatório.")]
     [Display(Name = "Ano")]
     public int Ano { get; set; }
 
-    [Required]
-    [MaxLength(30)]
+    [Required(ErrorMessage = "A cor é obrigatória.")]
+    [MaxLength(30, ErrorMessage = "A cor tem um tamanho máximo de 30 caracteres")]
     [Display(Name = "Cor")]
     public string Cor { get; set; }
 
-    [Required]
-    [Range(0.01, double.MaxValue)]
+    [Required(ErrorMessage = "O valor é obrigatório.")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "O campo deve ter o valor de no mínimo de 0.01")]
     [Display(Name = "Valor")]
     public double Valor { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Selecione uma situacao.")]
     [Display(Name = "Situação")]
     public SituacaoVeiculo Situacao { get; set; }
 }

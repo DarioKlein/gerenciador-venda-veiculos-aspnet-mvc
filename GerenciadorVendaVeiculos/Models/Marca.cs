@@ -7,19 +7,12 @@ namespace GerenciadorVendaVeiculos.Models;
 public class Marca
 {
     [Key]
-    [Display(Name = "ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private set; }
 
-    [Required]
-    [MaxLength(50)]
-    [Display(Name = "Nome")]
-    public string Nome { get; private set; }
+    [Required] [MaxLength(50)] public string Nome { get; private set; }
 
-    [Required]
-    [MaxLength(10)]
-    [Display(Name = "Sigla")]
-    public string Sigla { get; private set; }
+    [Required] [MaxLength(10)] public string Sigla { get; private set; }
 
     private Marca()
     {

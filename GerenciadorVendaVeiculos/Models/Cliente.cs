@@ -7,29 +7,19 @@ namespace GerenciadorVendaVeiculos.Models;
 public class Cliente
 {
     [Key]
-    [Display(Name = "ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private set; }
 
 
-    [Required]
-    [MaxLength(100)]
-    [Display(Name = "Nome")]
-    public string Nome { get; private set; }
+    [Required] [MaxLength(100)] public string Nome { get; private set; }
 
-    [Required] [Display(Name = "Área")] public TipoArea Area { get; private set; }
+    [Required] public TipoArea Area { get; private set; }
 
 
-    [Required]
-    [Range(0, 150)]
-    [Display(Name = "Idade")]
-    public int Idade { get; private set; }
+    [Required] [Range(0, 150)] public int Idade { get; private set; }
 
 
-    [Required]
-    [Range(0, double.MaxValue)]
-    [Display(Name = "Valor Hora")]
-    public double ValorHora { get; private set; }
+    [Required] [Range(0, double.MaxValue)] public double ValorHora { get; private set; }
 
     [Required] public int CidadeId { get; private set; }
 

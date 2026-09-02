@@ -1,48 +1,56 @@
 @model GerenciadorVendaVeiculos.Models.Cliente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do cliente";
+
+    (string classes, string label) AreaBadge(GerenciadorVendaVeiculos.Models.TipoArea area) => area switch
+    {
+        GerenciadorVendaVeiculos.Models.TipoArea.PessoaFisica => ("bg-blue-50 text-blue-700 border-blue-200", "Pessoa Física"),
+        GerenciadorVendaVeiculos.Models.TipoArea.PessoaJuridica => ("bg-purple-50 text-purple-700 border-purple-200", "Pessoa Jurídica"),
+        _ => ("bg-ink/5 text-steel border-line", area.ToString())
+    };
+
+    var (badgeClasses, badgeLabel) = AreaBadge(Model.Area);
 }
 
-<h1>Details</h1>
+<div class="max-w-md">
+    <h2 class="font-display text-2xl font-semibold text-ink">@Model.Nome</h2>
+    <p class="text-sm text-steel mt-1 mb-6">Detalhes do cliente cadastrado.</p>
 
-<div>
-    <h4>Cliente</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Idade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Idade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorHora)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ValorHora)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade.Descricao)
-        </dd>
+    <dl class="border border-line rounded-md divide-y divide-line">
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Nome)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Nome)</dd>
+        </div>
+        <div class="flex justify-between items-center px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Area)</dt>
+            <dd>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border @badgeClasses">
+                    @badgeLabel
+                </span>
+            </dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Idade)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Idade)</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.ValorHora)</dt>
+            <dd class="text-sm text-ink font-medium">@Model.ValorHora.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</dd>
+        </div>
+        <div class="flex justify-between px-4 py-3">
+            <dt class="text-sm text-steel">@Html.DisplayNameFor(model => model.Cidade)</dt>
+            <dd class="text-sm text-ink font-medium">@Html.DisplayFor(model => model.Cidade.Descricao)</dd>
+        </div>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+    <div class="mt-6 flex gap-3">
+        <a asp-action="Edit" asp-route-id="@Model?.Id"
+           class="px-4 py-2 rounded-md bg-signal text-white font-medium hover:bg-signal/90 transition-colors">
+            Editar
+        </a>
+        <a asp-action="Index" class="px-4 py-2 rounded-md border border-line text-ink font-medium hover:bg-ink/5 transition-colors">
+            Voltar
+        </a>
+    </div>
 </div>

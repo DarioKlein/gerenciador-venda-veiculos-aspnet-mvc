@@ -10,19 +10,16 @@ namespace GerenciadorVendaVeiculos.Models;
 public class Cidade
 {
     [Key]
-    [Display(Name = "ID")]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private set; }
 
     [Required]
     [MaxLength(100)]
-    [Display(Name = "Descrição")]
     public string Descricao { get; private set; }
 
     [Required]
     [MaxLength(3)]
     [Column(TypeName = "varchar(3)")]
-    [Display(Name = "Sigla")]
     public string Sigla { get; private set; }
 
     private Cidade()

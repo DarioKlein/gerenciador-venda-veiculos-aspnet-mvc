@@ -1,7 +1,7 @@
 # StockCar Manager — Gerenciador de Venda de Veículos
 
 <p align="center">
-  <img src="wwwroot/img/logo.png" alt="Logo do StockCar Manager" width="120">
+  <img src="./GerenciadorVendaVeiculos/wwwroot/img/logo.png" alt="Logo do StockCar Manager" width="120">
 </p>
 
 Aplicação web para administrar o catálogo, os clientes e as vendas de uma loja de veículos. O sistema centraliza o cadastro de cidades, marcas, veículos e clientes, além de registrar vendas e acompanhar indicadores básicos por meio de um dashboard.

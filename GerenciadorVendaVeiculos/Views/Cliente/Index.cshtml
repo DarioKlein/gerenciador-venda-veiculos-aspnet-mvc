@@ -18,7 +18,10 @@
 
 <div class="flex flex-col gap-5 justify-between mb-6 sm:flex-row sm:items-center sm:gap-0">
     <div>
-        <h2 class="font-display text-2xl font-semibold text-ink">Clientes</h2>
+        <h2 class="font-display text-2xl font-semibold text-ink flex items-center gap-2">
+            <i data-lucide="users" class="w-6 h-6 text-signal"></i>
+            <span>Clientes</span>
+        </h2>
         <p class="text-sm text-steel mt-1">Clientes cadastrados no sistema.</p>
     </div>
     <a asp-action="Create"

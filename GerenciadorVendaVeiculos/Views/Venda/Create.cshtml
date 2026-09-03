@@ -31,26 +31,26 @@
 
         <div>
             <label asp-for="DataVenda" class="block text-sm font-medium text-ink mb-1"></label>
-            <input asp-for="DataVenda" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
+            <input asp-for="DataVenda" placeholder="Selecione a data da venda" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
             <span asp-validation-for="DataVenda" class="text-red-600 text-xs"></span>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label asp-for="ValorVenda" class="block text-sm font-medium text-ink mb-1"></label>
-                <input asp-for="ValorVenda" type="number" step="0.01" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
+                <input asp-for="ValorVenda" type="number" step="0.01" placeholder="Ex.: 85000,00" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
                 <span asp-validation-for="ValorVenda" class="text-red-600 text-xs"></span>
             </div>
             <div>
                 <label asp-for="ValorCausa" class="block text-sm font-medium text-ink mb-1"></label>
-                <input asp-for="ValorCausa" type="number" step="0.01" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
+                <input asp-for="ValorCausa" type="number" step="0.01" placeholder="Ex.: 5000,00" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
                 <span asp-validation-for="ValorCausa" class="text-red-600 text-xs"></span>
             </div>
         </div>
 
         <div>
             <label asp-for="Vendedor" class="block text-sm font-medium text-ink mb-1"></label>
-            <input asp-for="Vendedor" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
+            <input asp-for="Vendedor" placeholder="Ex.: Maria Oliveira" class="w-full rounded-md border border-line px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-signal/50 focus:border-signal" />
             <span asp-validation-for="Vendedor" class="text-red-600 text-xs"></span>
         </div>
 

@@ -67,7 +67,7 @@ public class Cliente
 
     public void SetIdade(int idade)
     {
-        if (idade >= 18 && idade >= 150)
+        if (idade < 18 || idade > 150)
         {
             throw new ArgumentException("A idade deve estar entre 18 e 150 anos");
         }

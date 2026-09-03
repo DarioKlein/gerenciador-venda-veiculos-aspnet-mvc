@@ -51,7 +51,8 @@ namespace GerenciadorVendaVeiculos.Controllers
         public IActionResult Create()
         {
             ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome");
-            ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Modelo");
+            ViewData["VeiculoId"] =
+                new SelectList(_context.Veiculos.Where(v => v.Situacao == SituacaoVeiculo.Disponivel), "Id", "Modelo");
             return View(new VendaViewModel { DataVenda = DateTime.Now });
         }
 
@@ -78,6 +79,8 @@ namespace GerenciadorVendaVeiculos.Controllers
                     var venda = new Venda(cliente, veiculo, viewModel.DataVenda, viewModel.ValorVenda,
                         viewModel.ValorCausa, viewModel.Vendedor);
 
+
+                    veiculo.SetSituacao(SituacaoVeiculo.Vendido);
                     _context.Add(venda);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -204,11 +207,13 @@ namespace GerenciadorVendaVeiculos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var venda = await _context.Vendas.FindAsync(id);
+            var venda = await _context.Vendas.Include(v => v.Veiculo).FirstOrDefaultAsync(v => v.Id == id);
             if (venda != null)
             {
+                venda.Veiculo.SetSituacao(SituacaoVeiculo.Disponivel);
                 _context.Vendas.Remove(venda);
             }
+
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -50,6 +50,20 @@ namespace GerenciadorVendaVeiculos.Controllers
         public IActionResult Create()
         {
             ViewData["MarcaId"] = new SelectList(_context.Marcas, "Id", "Nome");
+
+            ViewData["Situacoes"] = new List<SelectListItem>
+            {
+                new()
+                {
+                    Value = SituacaoVeiculo.Disponivel.ToString(),
+                    Text = "Disponível"
+                },
+                new()
+                {
+                    Value = SituacaoVeiculo.EmManutencao.ToString(),
+                    Text = "Em manutenção"
+                }
+            };
             return View(new VeiculoViewModel());
         }
 

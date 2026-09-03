@@ -16,14 +16,14 @@ public class ClienteViewModel
     public TipoArea Area { get; set; }
 
     [Required(ErrorMessage = "A idade é obrigatória.")]
-    [Range(0, 150, ErrorMessage = "A idade deve ser maior que 0 e menor que 150")]
+    [Range(18, 150, ErrorMessage = "A idade deve estar entre 18 e 150 anos")]
     [Display(Name = "Idade")]
     public int Idade { get; set; }
 
     [Required(ErrorMessage = "O valor da hora é obrigatório.")]
     [Range(0, double.MaxValue, ErrorMessage = "O valor não pode ser negativo")]
     [Display(Name = "Valor Hora")]
-    public double ValorHora { get; set; }
+    public double? ValorHora { get; set; }
 
     [Required(ErrorMessage = "Selecione uma cidade.")]
     [Display(Name = "Cidade")]

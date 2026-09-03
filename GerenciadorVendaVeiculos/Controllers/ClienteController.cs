@@ -58,7 +58,7 @@ namespace GerenciadorVendaVeiculos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && viewModel.ValorHora.HasValue)
             {
                 try
                 {
@@ -70,7 +70,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                         return View(viewModel);
                     }
 
-                    var cliente = new Cliente(viewModel.Nome, viewModel.Area, viewModel.Idade, viewModel.ValorHora,
+                    var cliente = new Cliente(viewModel.Nome, viewModel.Area, viewModel.Idade, viewModel.ValorHora.Value,
                         cidade);
 
                     _context.Add(cliente);
@@ -126,7 +126,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && viewModel.ValorHora.HasValue)
             {
                 try
                 {
@@ -141,7 +141,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                     cliente.SetNome(viewModel.Nome);
                     cliente.SetArea(viewModel.Area);
                     cliente.SetIdade(viewModel.Idade);
-                    cliente.SetValorHora(viewModel.ValorHora);
+                    cliente.SetValorHora(viewModel.ValorHora.Value);
                     cliente.SetCidade(cidade);
 
                     await _context.SaveChangesAsync();

@@ -85,6 +85,13 @@ public class Veiculo
             throw new ArgumentException("A cor deve conter no máximo 30 caracteres");
         }
 
+        if (!cor.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+        {
+            throw new ArgumentException(
+                "A cor deve conter apenas letras e espaços"
+            );
+        }
+
         Cor = cor;
     }
 

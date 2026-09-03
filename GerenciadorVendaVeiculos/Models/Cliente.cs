@@ -16,7 +16,7 @@ public class Cliente
     [Required] public TipoArea Area { get; private set; }
 
 
-    [Required] [Range(0, 150)] public int Idade { get; private set; }
+    [Required] [Range(18, 150)] public int Idade { get; private set; }
 
 
     [Required] [Range(0, double.MaxValue)] public double ValorHora { get; private set; }
@@ -50,6 +50,13 @@ public class Cliente
             throw new ArgumentException("O nome deve conter no máximo 100 caracteres");
         }
 
+        if (!nome.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+        {
+            throw new ArgumentException(
+                "O nomes deve conter apenas letras e espaços"
+            );
+        }
+
         Nome = nome;
     }
 
@@ -60,9 +67,9 @@ public class Cliente
 
     public void SetIdade(int idade)
     {
-        if (idade < 0 || idade > 150)
+        if (idade >= 18 && idade >= 150)
         {
-            throw new ArgumentException("A idade deve estar entre 0 e 150 anos");
+            throw new ArgumentException("A idade deve estar entre 18 e 150 anos");
         }
 
         Idade = idade;

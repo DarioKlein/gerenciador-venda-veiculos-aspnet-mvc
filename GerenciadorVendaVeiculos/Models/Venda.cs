@@ -98,6 +98,13 @@ public class Venda
             throw new ArgumentException("O vendedor deve conter no máximo 100 caracteres");
         }
 
+        if (!vendedor.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+        {
+            throw new ArgumentException(
+                "O nome do vendedor deve conter apenas letras e espaços"
+            );
+        }
+
         Vendedor = vendedor;
     }
 }

@@ -28,46 +28,47 @@ else
         <div class="overflow-x-auto">
             <table class="w-full text-sm min-w-[880px] table-fixed">
                 <thead>
-                    <tr class="border-b border-line bg-ink/[0.02] text-center">
-                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Cliente</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Veículo</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[12%]">Data</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Venda</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Causa</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[16%]">Vendedor</th>
-                        <th class="px-4 py-3 font-medium text-steel w-[12%]"></th>
-                    </tr>
+                <tr class="border-b border-line bg-ink/[0.02] text-center">
+                    <th class="px-4 py-3 font-medium text-steel w-[16%]">Cliente</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[16%]">Veículo</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[12%]">Data</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Venda</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[14%]">Valor Causa</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[16%]">Vendedor</th>
+                    <th class="px-4 py-3 font-medium text-steel w-[12%]"></th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02] text-center">
-                            <td class="px-4 py-3 text-ink font-medium truncate">@Html.DisplayFor(modelItem => item.Cliente.Nome)</td>
-                            <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Veiculo.Modelo)</td>
-                            <td class="px-4 py-3 text-steel">@item.DataVenda.ToString("dd/MM/yyyy")</td>
-                            <td class="px-4 py-3 text-ink">@item.ValorVenda.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
-                            <td class="px-4 py-3 text-steel">@item.ValorCausa.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
-                            <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Vendedor)</td>
-                            <td class="px-4 py-3">
-                                <div class="flex items-center justify-end gap-1">
-                                    <a asp-action="Details" asp-route-id="@item.Id"
-                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
-                                    </a>
-                                    <a asp-action="Edit" asp-route-id="@item.Id"
-                                       class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
-                                        <i data-lucide="pencil" class="w-4 h-4"></i>
-                                    </a>
-                                    <button type="button" class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
-                                            title="Excluir"
-                                            data-delete-id="@item.Id"
-                                            data-delete-nome="venda de @item.Cliente.Nome">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var item in Model)
+                {
+                    <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02] text-center">
+                        <td class="px-4 py-3 text-ink font-medium truncate">@Html.DisplayFor(modelItem => item.Cliente.Nome)</td>
+                        <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Veiculo.Modelo)</td>
+                        <td class="px-4 py-3 text-steel">@item.DataVenda.ToString("dd/MM/yyyy")</td>
+                        <td class="px-4 py-3 text-ink">@item.ValorVenda.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                        <td class="px-4 py-3 text-steel">@item.ValorCausa.ToString("C2", new System.Globalization.CultureInfo("pt-BR"))</td>
+                        <td class="px-4 py-3 text-steel truncate">@Html.DisplayFor(modelItem => item.Vendedor)</td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center justify-end gap-1">
+                                <a asp-action="Details" asp-route-id="@item.Id"
+                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id"
+                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </a>
+                                <button type="button"
+                                        class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
+                                        title="Excluir"
+                                        data-delete-id="@item.Id"
+                                        data-delete-nome="venda de @item.Cliente.Nome">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

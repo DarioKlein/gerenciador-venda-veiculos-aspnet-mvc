@@ -27,38 +27,38 @@ else
     <div class="border border-line rounded-md overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
-                <tr class="border-b border-line bg-ink/[0.02] text-left">
-                    <th class="px-4 py-3 font-medium text-steel">Nome</th>
-                    <th class="px-4 py-3 font-medium text-steel">Sigla</th>
-                    <th class="px-4 py-3 font-medium text-steel w-0"></th>
-                </tr>
+            <tr class="border-b border-line bg-ink/[0.02] text-left">
+                <th class="px-4 py-3 font-medium text-steel">Nome</th>
+                <th class="px-4 py-3 font-medium text-steel">Sigla</th>
+                <th class="px-4 py-3 font-medium text-steel w-0"></th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02]">
-                        <td class="px-4 py-3 text-ink">@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Sigla)</td>
-                        <td class="px-4 py-3">
-                            <div class="flex items-center justify-end gap-1">
-                                <a asp-action="Details" asp-route-id="@item.Id"
-                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
-                                </a>
-                                <a asp-action="Edit" asp-route-id="@item.Id"
-                                   class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
-                                    <i data-lucide="pencil" class="w-4 h-4"></i>
-                                </a>
-                                <button type="button" class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
-                                        title="Excluir"
-                                        data-delete-id="@item.Id"
-                                        data-delete-nome="@item.Nome">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model)
+            {
+                <tr class="border-b border-line last:border-0 hover:bg-ink/[0.02]">
+                    <td class="px-4 py-3 text-ink">@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td class="px-4 py-3 text-steel">@Html.DisplayFor(modelItem => item.Sigla)</td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center justify-end gap-1">
+                            <a asp-action="Details" asp-route-id="@item.Id"
+                               class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Detalhes">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               class="p-2 rounded-md text-steel hover:text-ink hover:bg-ink/5" title="Editar">
+                                <i data-lucide="pencil" class="w-4 h-4"></i>
+                            </a>
+                            <button type="button" class="p-2 rounded-md text-steel hover:text-red-600 hover:bg-red-50"
+                                    title="Excluir"
+                                    data-delete-id="@item.Id"
+                                    data-delete-nome="@item.Nome">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

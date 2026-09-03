@@ -57,6 +57,33 @@ namespace GerenciadorVendaVeiculos.Controllers
         {
             if (ModelState.IsValid)
             {
+                var nomeExiste = await _context.Marcas
+                    .AnyAsync(c => c.Nome == viewModel.Nome);
+
+                if (nomeExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Nome),
+                        "Já existe uma marca com esse nome."
+                    );
+                }
+
+                var siglaExiste = await _context.Marcas
+                    .AnyAsync(c => c.Sigla == viewModel.Sigla);
+
+                if (siglaExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Sigla),
+                        "Já existe uma marca com essa sigla."
+                    );
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModel);
+                }
+                
                 try
                 {
                     var marca = new Marca(viewModel.Nome, viewModel.Sigla);
@@ -110,6 +137,35 @@ namespace GerenciadorVendaVeiculos.Controllers
 
             if (ModelState.IsValid)
             {
+                var nomeExiste = await _context.Marcas
+                    .AnyAsync(c => c.Nome == viewModel.Nome
+                                   && c.Id != viewModel.Id);
+
+                if (nomeExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Nome),
+                        "Já existe uma marca com esse nome."
+                    );
+                }
+
+                var siglaExiste = await _context.Marcas
+                    .AnyAsync(c => c.Sigla == viewModel.Sigla
+                                   && c.Id != viewModel.Id);
+
+                if (siglaExiste)
+                {
+                    ModelState.AddModelError(
+                        nameof(viewModel.Sigla),
+                        "Já existe uma marca com essa sigla."
+                    );
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(viewModel);
+                }
+
                 try
                 {
                     marca.SetNome(viewModel.Nome);

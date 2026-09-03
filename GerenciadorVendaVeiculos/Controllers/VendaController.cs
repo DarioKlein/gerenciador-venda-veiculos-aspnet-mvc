@@ -76,6 +76,14 @@ namespace GerenciadorVendaVeiculos.Controllers
                         return View(viewModel);
                     }
 
+                    if (veiculo.Situacao != SituacaoVeiculo.Disponivel)
+                    {
+                        ModelState.AddModelError("", "Veículo com status não disponível");
+                        ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome", viewModel.ClienteId);
+                        ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Modelo", viewModel.VeiculoId);
+                        return View(viewModel);
+                    }
+
                     var venda = new Venda(cliente, veiculo, viewModel.DataVenda, viewModel.ValorVenda,
                         viewModel.ValorCausa, viewModel.Vendedor);
 
@@ -150,6 +158,26 @@ namespace GerenciadorVendaVeiculos.Controllers
                         ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome", viewModel.ClienteId);
                         ViewData["VeiculoId"] = new SelectList(_context.Veiculos, "Id", "Modelo", viewModel.VeiculoId);
                         return View(viewModel);
+                    }
+
+                    bool trocouVeiculo = veiculo.Id != venda.VeiculoId;
+
+                    if (trocouVeiculo)
+                    {
+                        if (veiculo.Situacao != SituacaoVeiculo.Disponivel)
+                        {
+                            ModelState.AddModelError("", "Veículo com status não disponível");
+                            ViewData["ClienteId"] =
+                                new SelectList(_context.Clientes, "Id", "Nome", viewModel.ClienteId);
+                            ViewData["VeiculoId"] =
+                                new SelectList(_context.Veiculos, "Id", "Modelo", viewModel.VeiculoId);
+                            return View(viewModel);
+                        }
+
+                        var veiculoAntigo = await _context.Veiculos.FindAsync(venda.VeiculoId);
+                        veiculoAntigo?.SetSituacao(SituacaoVeiculo.Disponivel);
+
+                        veiculo.SetSituacao(SituacaoVeiculo.Vendido);
                     }
 
                     venda.SetCliente(cliente);

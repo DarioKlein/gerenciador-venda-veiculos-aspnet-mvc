@@ -23,5 +23,17 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Venda>()
             .Property(v => v.DataVenda)
             .HasColumnType("timestamp without time zone");
+
+        modelBuilder.Entity<Veiculo>().HasOne(v => v.Marca).WithMany().HasForeignKey(v => v.MarcaId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Cliente>().HasOne(c => c.Cidade).WithMany().HasForeignKey(c => c.CidadeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Venda>().HasOne(v => v.Cliente).WithMany().HasForeignKey(v => v.ClienteId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Venda>().HasOne(v => v.Veiculo).WithMany().HasForeignKey(v => v.VeiculoId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

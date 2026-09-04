@@ -236,14 +236,18 @@ namespace GerenciadorVendaVeiculos.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var venda = await _context.Vendas.Include(v => v.Veiculo).FirstOrDefaultAsync(v => v.Id == id);
-            if (venda != null)
+
+            if (venda == null)
             {
-                venda.Veiculo.SetSituacao(SituacaoVeiculo.Disponivel);
-                _context.Vendas.Remove(venda);
+                return NotFound();
             }
 
+            venda.Veiculo.SetSituacao(SituacaoVeiculo.Disponivel);
+            _context.Vendas.Remove(venda);
 
             await _context.SaveChangesAsync();
+            TempData["Sucesso"] = "Venda excluída com sucesso.";
+
             return RedirectToAction(nameof(Index));
         }
 

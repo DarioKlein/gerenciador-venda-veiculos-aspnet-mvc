@@ -191,12 +191,31 @@ namespace GerenciadorVendaVeiculos.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente != null)
+
+            if (cliente == null)
             {
-                _context.Clientes.Remove(cliente);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
+            var possuiVendas = await _context.Vendas.AnyAsync(v => v.ClienteId == id);
+
+            if (possuiVendas)
+            {
+                TempData["Erro"] = "Não foi possível excluir o cliente porque ele possui vendas relacionadas.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Clientes.Remove(cliente);
+                await _context.SaveChangesAsync();
+                TempData["Sucesso"] = "Cliente excluído com sucesso.";
+            }
+            catch (DbUpdateException)
+            {
+                TempData["Erro"] = "Não foi possível excluir o cliente porque ele está relacionado a outro registro.";
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

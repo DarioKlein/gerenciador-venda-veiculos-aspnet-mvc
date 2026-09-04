@@ -31,6 +31,24 @@
     </a>
 </div>
 
+@if (TempData["Erro"] is string mensagemErro)
+{
+    <div role="alert"
+         class="mb-6 flex items-start gap-3 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+        <i data-lucide="circle-alert" class="mt-0.5 h-5 w-5 shrink-0"></i>
+        <p class="text-sm font-medium">@mensagemErro</p>
+    </div>
+}
+
+@if (TempData["Sucesso"] is string mensagemSucesso)
+{
+    <div role="status"
+         class="mb-6 flex items-start gap-3 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-green-700">
+        <i data-lucide="circle-check" class="mt-0.5 h-5 w-5 shrink-0"></i>
+        <p class="text-sm font-medium">@mensagemSucesso</p>
+    </div>
+}
+
 @if (!Model.Any())
 {
     <div class="border border-line rounded-md py-12 text-center">

@@ -83,7 +83,7 @@ namespace GerenciadorVendaVeiculos.Controllers
                 {
                     return View(viewModel);
                 }
-                
+
                 try
                 {
                     var marca = new Marca(viewModel.Nome, viewModel.Sigla);
@@ -216,12 +216,31 @@ namespace GerenciadorVendaVeiculos.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var marca = await _context.Marcas.FindAsync(id);
-            if (marca != null)
+
+            if (marca == null)
             {
-                _context.Marcas.Remove(marca);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
+            var possuiVeiculos = await _context.Veiculos.AnyAsync(v => v.MarcaId == id);
+
+            if (possuiVeiculos)
+            {
+                TempData["Erro"] = "Não foi possível excluir a marca porque ela possui veículos relacionados.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.Marcas.Remove(marca);
+                await _context.SaveChangesAsync();
+                TempData["Sucesso"] = "Marca excluída com sucesso.";
+            }
+            catch (DbUpdateException)
+            {
+                TempData["Erro"] = "Não foi possível excluir a marca porque ela está relacionada a outro registro.";
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
